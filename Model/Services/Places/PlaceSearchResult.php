@@ -8,7 +8,7 @@ use Ivory\GoogleMapBundle\Model\Base\Coordinate;
  * PlaceSearchResult represents a google map place result
  *
  * @see https://developers.google.com/maps/documentation/places/#PlaceSearchResults
- * @author Yvann Boucher <gyvann.boucher@gmail.com>
+ * @author Yvann Boucher <yvann.boucher@gmail.com>
  */
 class PlaceSearchResult
 {

@@ -9,7 +9,7 @@ use Ivory\GoogleMapBundle\Model\Base\Coordinate;
  * PlaceSearchRequest represents a google map places request
  *
  * @see http://code.google.com/apis/maps/documentation/javascript/reference.html#PlaceSearchRequest
- * @author Yvann Boucher <gyvann.boucher@gmail.com>
+ * @author Yvann Boucher <yvann.boucher@gmail.com>
  */
 class PlaceSearchRequest extends AbstractRequest
 {

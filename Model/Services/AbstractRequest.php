@@ -5,7 +5,7 @@ namespace Ivory\GoogleMapBundle\Model\Services;
 /**
  * Abstract class for accesing google API
  *
- * @author Yvann Boucher <gyvann.boucher@gmail.com>
+ * @author Yvann Boucher <yvann.boucher@gmail.com>
  */
 abstract class AbstractRequest
 {

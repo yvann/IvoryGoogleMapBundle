@@ -6,7 +6,7 @@ namespace Ivory\GoogleMapBundle\Model\Services\Places;
  * PlacesServiceStatus represents a google map places request status
  *
  * @see https://developers.google.com/maps/documentation/places/#PlaceSearchStatusCodes
- * @author Yvann Boucher <gyvann.boucher@gmail.com>
+ * @author Yvann Boucher <yvann.boucher@gmail.com>
  */
 class PlaceSearchStatus
 {

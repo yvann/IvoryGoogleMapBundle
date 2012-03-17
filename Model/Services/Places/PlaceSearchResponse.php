@@ -8,7 +8,7 @@ use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchStatus;
 /**
  * Place search response wraps the place search results & the response status
  *
- * @author GeLo <geloen.eric@gmail.com>
+ * @author Yvann Boucher <yvann.boucher@gmail.com>
  */
 class PlaceSearchResponse
 {
