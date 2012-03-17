@@ -105,7 +105,8 @@ class PlaceSearchService extends AbstractService
             ->setLocation(
                 new Coordinate(
                     $placeSearchResult->geometry->location->lat,
-                    $placeSearchResult->geometry->location->lng
+                    $placeSearchResult->geometry->location->lng,
+                    $placeSearchResult->geometry->location->noWrap
                 )
             )
             ->setIcon(isset($placeSearchResult->icon) ? $placeSearchResult->icon : null)
