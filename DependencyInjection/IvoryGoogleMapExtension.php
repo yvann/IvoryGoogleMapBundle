@@ -29,6 +29,9 @@ class IvoryGoogleMapExtension extends Extension
         foreach(array('services.xml') as $file)
             $loader->load($file);
 
+        // Api key section
+        $this->loadApiKey($config, $container);
+
         // Map sections
         $this->loadMap($config, $container);
 
@@ -72,8 +75,22 @@ class IvoryGoogleMapExtension extends Extension
         $this->loadGeocoderRequest($config, $container);
         $this->loadDirections($config, $container);
         $this->loadDirectionsRequest($config, $container);
+        $this->loadPlaceSearch($config, $container);
+        $this->loadPlaceSearchRequest($config, $container);
 
         $loader->load('twig.xml');
+    }
+
+    /**
+     * Loads api key configuration
+     *
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    protected function loadApiKey(array $config, ContainerBuilder $container)
+    {
+        $container->setParameter('ivory_google_map.api_key.server', $config['api_key']['server']);
+        $container->setParameter('ivory_google_map.api_key.browser', $config['api_key']['browser']);
     }
 
     /**
@@ -521,5 +538,29 @@ class IvoryGoogleMapExtension extends Extension
         $container->setParameter('ivory_google_map.directions_request.travel_mode', is_null($config['directions_request']['travel_mode']) ? null : strtoupper($config['directions_request']['travel_mode']));
         $container->setParameter('ivory_google_map.directions_request.unit_system', is_null($config['directions_request']['unit_system']) ? null : strtoupper($config['directions_request']['unit_system']));
         $container->setParameter('ivory_google_map.directions_request.sensor', $config['directions_request']['sensor']);
+    }
+
+    /**
+     * Loads place search configuration
+     *
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    protected function loadPlaceSearch(array $config, ContainerBuilder $container)
+    {
+        $container->setParameter('ivory_google_map.place_search.https', $config['place_search']['https']);
+        $container->setParameter('ivory_google_map.place_search.format', $config['place_search']['format']);
+        $container->setParameter('ivory_google_map.place_search.url', $config['place_search']['url']);
+    }
+
+    /**
+     * Loads place search request configuration
+     *
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    protected function loadPlaceSearchRequest(array $config, ContainerBuilder $container)
+    {
+        $container->setParameter('ivory_google_map.place_search_request.sensor', $config['place_search_request']['sensor']);
     }
 }

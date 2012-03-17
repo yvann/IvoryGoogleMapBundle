@@ -47,6 +47,10 @@
         <parameter key="ivory_google_map.directions.class">Ivory\GoogleMapBundle\Model\Services\Directions\DirectionsService</parameter>
         <parameter key="ivory_google_map.directions_request.class">Ivory\GoogleMapBundle\Model\Services\Directions\DirectionsRequest</parameter>
 
+        <parameter key="ivory_google_map.places.class">Ivory\GoogleMapBundle\Model\Services\Places\PlacesService</parameter>
+        <parameter key="ivory_google_map.place_search.class">Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchService</parameter>
+        <parameter key="ivory_google_map.place_search_request.class">Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchRequest</parameter>
+
         <!-- Event listener -->
         <parameter key="ivory_google_map.geocoder.event_listener.fake_request.class">Ivory\GoogleMapBundle\EventListener\FakeRequestListener</parameter>
 
@@ -769,6 +773,34 @@
 
             <call method="setSensor">
                 <argument>%ivory_google_map.directions_request.sensor%</argument>
+            </call>
+        </service>
+
+        <!-- Places service -->
+        <service id="ivory_google_map.places" class="%ivory_google_map.places.class%">
+            <call method="setPlaceSearchService">
+                <argument type="service" id="ivory_google_map.place_search" />
+            </call>
+        </service>
+
+        <service id="ivory_google_map.place_search" class="%ivory_google_map.place_search.class%">
+            <argument>%ivory_google_map.place_search.url%</argument>
+            <argument>%ivory_google_map.place_search.https%</argument>
+            <argument>%ivory_google_map.place_search.format%</argument>
+            <argument type="service" id="buzz" />
+
+            <call method="setKey">
+                <argument>%ivory_google_map.api_key.server%</argument>
+            </call>
+        </service>
+
+        <!-- Place search request service -->
+        <service id="ivory_google_map.place_search_request" class="%ivory_google_map.place_search_request.class%" scope="prototype">
+            <call method="setLanguage">
+                <argument>%locale%</argument>
+            </call>
+            <call method="setSensor">
+                <argument>%ivory_google_map.place_search_request.sensor%</argument>
             </call>
         </service>
 

@@ -27,6 +27,9 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ivory_google_map');
 
+        // Api key section
+        $this->addApiKeySection($rootNode);
+
         // Map sections
         $this->addMapSection($rootNode);
 
@@ -70,8 +73,28 @@ class Configuration implements ConfigurationInterface
         $this->addGeocoderRequestSection($rootNode);
         $this->addDirectionsSection($rootNode);
         $this->addDirectionsRequestSection($rootNode);
+        $this->addPlaceSearchSection($rootNode);
+        $this->addPlaceSearchRequestSection($rootNode);
 
         return $treeBuilder;
+    }
+
+    /**
+     * Add the api key section
+     *
+     * @param Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    protected function addApiKeySection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('api_key')->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('server')->defaultValue(null)->end()
+                        ->scalarNode('browser')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+            ->end();
     }
 
     /**
@@ -791,6 +814,42 @@ class Configuration implements ConfigurationInterface
                         ->scalarNode('region')->defaultValue(null)->end()
                         ->scalarNode('travel_mode')->defaultValue(null)->end()
                         ->scalarNode('unit_system')->defaultValue(null)->end()
+                        ->booleanNode('sensor')->defaultFalse()->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     * Add the places section
+     *
+     * @param Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    protected function addPlaceSearchSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('place_search')->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('https')->defaultFalse()->end()
+                        ->scalarNode('format')->defaultValue('json')->end()
+                        ->scalarNode('url')->defaultValue('http://maps.googleapis.com/maps/api/place/search')->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     * Add the place search request section
+     *
+     * @param Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    protected function addPlaceSearchRequestSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('place_search_request')->addDefaultsIfNotSet()
+                    ->children()
                         ->booleanNode('sensor')->defaultFalse()->end()
                     ->end()
                 ->end()
