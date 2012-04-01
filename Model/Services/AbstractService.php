@@ -32,6 +32,11 @@ abstract class AbstractService
     protected $format = 'json';
     
     /**
+     * @var string The service API Key
+     */
+    protected $key = null;
+    
+    /**
      * Creates a service
      * 
      * @param string $url Service url
@@ -129,5 +134,26 @@ abstract class AbstractService
             $this->format = $format;
         else
             throw new \InvalidArgumentException('The service format can only be : '.implode(', ', $availableFormats));
+    }
+    
+    /**
+     * Gets the service API key
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        return $this->key;
+    }
+    
+    /**
+     * Sets the service API key
+     *
+     * @param string $url 
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+        return $this;
     }
 }
