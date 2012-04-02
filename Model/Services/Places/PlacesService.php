@@ -26,4 +26,14 @@ class PlacesService
     {
         $this->placeSearchService = $placeSearchService;
     }
+
+    /**
+     * Gets the place search service
+     *
+     * @return Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchService
+     */
+    public function getPlaceSearchService()
+    {
+        return $this->placeSearchService;
+    }
 }
