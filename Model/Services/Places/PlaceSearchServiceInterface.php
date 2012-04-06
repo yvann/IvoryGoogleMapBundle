@@ -9,7 +9,7 @@ use Ivory\GoogleMapBundle\Model\Services\AbstractRequest;
  *
  * @author Yvann Boucher <yvann.boucher@gmail.com>
  */
-class PlaceSearchServiceInterface
+interface PlaceSearchServiceInterface
 {
     public function execute(AbstractRequest $placeSearchRequest);
 }
