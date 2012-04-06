@@ -3,6 +3,7 @@
 namespace Ivory\GoogleMapBundle\Model\Services\Places;
 
 use Ivory\GoogleMapBundle\Model\Services\AbstractService;
+use Ivory\GoogleMapBundle\Model\Services\AbstractRequest;
 use Ivory\GoogleMapBundle\Model\Base\Coordinate;
 
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchRequest;
@@ -22,7 +23,7 @@ class PlaceSearchService extends AbstractService implements PlaceSearchServiceIn
      *
      * @return Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
      */
-    public function execute(PlaceSearchRequest $placeSearchRequest)
+    public function execute(AbstractRequest $placeSearchRequest)
     {
         $response = $this->browser->get($this->generateUrl($placeSearchRequest));
 
