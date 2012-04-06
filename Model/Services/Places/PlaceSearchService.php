@@ -8,6 +8,7 @@ use Ivory\GoogleMapBundle\Model\Base\Coordinate;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchRequest;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult;
+use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchServiceInterface;
 
 /**
  * Google map place search service
@@ -15,8 +16,12 @@ use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult;
  * @see https://developers.google.com/maps/documentation/places/#PlaceSearches
  * @author Yvann Boucher <yvann.boucher@gmail.com>
  */
-class PlaceSearchService extends AbstractService
+class PlaceSearchService extends AbstractService implements PlaceSearchServiceInterface
 {
+    /**
+     *
+     * @return Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
+     */
     public function execute(PlaceSearchRequest $placeSearchRequest)
     {
         $response = $this->browser->get($this->generateUrl($placeSearchRequest));

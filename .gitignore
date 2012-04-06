@@ -1,3 +1,4 @@
 Tests/vendor/*
 Tests/Emulation/cache/*
 Tests/Emulation/logs/*
+/nbproject/private/
