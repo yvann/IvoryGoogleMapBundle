@@ -2,6 +2,8 @@
 
 namespace Ivory\GoogleMapBundle\Templating\Helper;
 
+use Symfony\Component\Templating\Helper\Helper;
+
 use Ivory\GoogleMapBundle\Templating\Helper\Base;
 use Ivory\GoogleMapBundle\Templating\Helper\Controls;
 use Ivory\GoogleMapBundle\Templating\Helper\Layers;
@@ -16,8 +18,13 @@ use Ivory\GoogleMapBundle\Model\Events\Event;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-class MapHelper
+class MapHelper extends Helper
 {
+    /**
+     * @var boolean TRUE if the google map api has already been loaded else FALSE.
+     */
+    static protected $apiIsLoaded = false;
+
     /**
      * @var Ivory\GoogleMapBundle\Templating\Helper\Base\CoordinateHelper
      */
@@ -231,12 +238,13 @@ class MapHelper
     {
         $html = array();
 
-        $html[] = $this->renderGoogleMapAPI($map);
+        if (!self::$apiIsLoaded)
+            $html[] = $this->renderGoogleMapAPI($map);
+
         $html[] = '<script type="text/javascript">'.PHP_EOL;
 
-        if($map->isAsync()) {
+        if($map->isAsync())
             $html[] = 'function load_ivory_google_map() {'.PHP_EOL;
-        }
 
         $html[] = $this->renderMap($map);
         $html[] = $this->renderMarkers($map);
@@ -275,7 +283,9 @@ class MapHelper
      */
     protected function renderGoogleMapAPI(Map $map)
     {
-        $url = 'http://maps.google.com/maps/api/js?';
+        self::$apiIsLoaded = true;
+
+        $url = '//maps.google.com/maps/api/js?';
 
         $encodedPolylines = $map->getEncodedPolylines();
         if (!empty($encodedPolylines))
@@ -625,5 +635,15 @@ class MapHelper
     public function renderEvents(Map $map)
     {
         return $this->eventManagerHelper->render($map->getEventManager());
+    }
+
+    /**
+     * Returns the canonical name of this helper.
+     *
+     * @return string The canonical name
+     */
+    public function getName()
+    {
+        return 'ivory_google_map';
     }
 }
