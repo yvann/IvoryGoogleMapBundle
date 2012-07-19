@@ -562,5 +562,6 @@ class IvoryGoogleMapExtension extends Extension
     protected function loadPlaceSearchRequest(array $config, ContainerBuilder $container)
     {
         $container->setParameter('ivory_google_map.place_search_request.sensor', $config['place_search_request']['sensor']);
+        $container->setParameter('ivory_google_map.place_search_request.locale', $config['place_search_request']['locale']);
     }
 }

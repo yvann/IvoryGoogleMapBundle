@@ -851,6 +851,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('place_search_request')->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('sensor')->defaultFalse()->end()
+                        ->scalarNode('locale')->defaultValue(null)->end()
                     ->end()
                 ->end()
             ->end();

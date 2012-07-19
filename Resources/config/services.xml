@@ -788,7 +788,7 @@
             <argument>%ivory_google_map.place_search.url%</argument>
             <argument>%ivory_google_map.place_search.https%</argument>
             <argument>%ivory_google_map.place_search.format%</argument>
-            <argument type="service" id="buzz" />
+            <!--<argument type="service" id="buzz" />-->
 
             <call method="setKey">
                 <argument>%ivory_google_map.api_key.server%</argument>
@@ -798,7 +798,7 @@
         <!-- Place search request service -->
         <service id="ivory_google_map.place_search_request" class="%ivory_google_map.place_search_request.class%" scope="prototype">
             <call method="setLanguage">
-                <argument>%locale%</argument>
+                <argument>%ivory_google_map.place_search_request.locale%</argument>
             </call>
             <call method="setSensor">
                 <argument>%ivory_google_map.place_search_request.sensor%</argument>
