@@ -24,7 +24,7 @@ class PlaceSearchServiceTest extends AbstractServiceTest
     {
         self::$service = new PlaceSearchService();
         self::$service
-            ->setKey('AIzaSyDVbcasYGTYfjEX_EPFsGwgd414ywBMHQg')
+            ->setKey($_SERVER['API_KEY'])
             ->setHttps(true);
     }
 
