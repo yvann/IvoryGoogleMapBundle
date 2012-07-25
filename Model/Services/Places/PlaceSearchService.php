@@ -20,6 +20,19 @@ use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchServiceInterface;
 class PlaceSearchService extends AbstractService implements PlaceSearchServiceInterface
 {
     /**
+     * Creates a place search service
+     *
+     * @param string $url Service url
+     * @param boolean $https TRUE if the service uses HTTPS else FALSE
+     * @param string $format Format used by the service
+     * @param Buzz\Browser $browser Buzz browser used by the service
+     */
+    public function __construct($url = 'http://maps.googleapis.com/maps/api/place/search', $https = false, $format = 'json', Browser $browser = null)
+    {
+        parent::__construct($url, $https, $format, $browser);
+    }
+
+    /**
      *
      * @return Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
      */

@@ -2,10 +2,9 @@ language: php
 
 php:
   - 5.3
-  - 5.4
 
-script: phpunit
+script: phpunit -c phpunit.xml.dist
 
 notifications:
   email:
-    - geloen.eric@gmail.com
+    - yvann.boucher@gmail.com

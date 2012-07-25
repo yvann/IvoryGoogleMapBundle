@@ -39,7 +39,7 @@ abstract class AbstractServiceTest extends \PHPUnit_Framework_TestCase
         $url = self::$service->getUrl();
 
         self::$service->setUrl('http://someurl');
-        $this->assertEquals(self::$service->getUrl(), 'http://someurl');
+        $this->assertEquals(self::$service->getUrl(), self::$service->isHttps() ? 'https://someurl' : 'http://someurl');
 
         $this->setExpectedException('InvalidArgumentException');
         self::$service->setUrl(true);
