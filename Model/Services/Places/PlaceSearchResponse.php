@@ -34,7 +34,7 @@ class PlaceSearchResponse
      * @param string $status
      * @param string $htmlAttributions
      */
-    public function __construct(array $results, $status, $htmlAttributions)
+    public function __construct(array $results, $status, $htmlAttributions = array())
     {
         $this
             ->setResults($results)
@@ -102,7 +102,7 @@ class PlaceSearchResponse
         }
 
         return $this;
-    }   
+    }
 
     /**
      * Gets the place search response html attribution
@@ -128,7 +128,7 @@ class PlaceSearchResponse
         }
 
         return $this;
-    }   
+    }
 
     /**
      * Add a place search response html attribution
@@ -139,5 +139,5 @@ class PlaceSearchResponse
     {
         $this->htmlAttributions[] = $htmlAttribution;
         return $this;
-    }   
+    }
 }

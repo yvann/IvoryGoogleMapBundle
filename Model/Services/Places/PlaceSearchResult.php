@@ -69,6 +69,11 @@ class PlaceSearchResult
         return $this;
     }
 
+    public function hasId()
+    {
+        return !is_null($this->id);
+    }
+
     public function getId()
     {
         return $this->id;
@@ -78,6 +83,11 @@ class PlaceSearchResult
     {
         $this->id = $id;
         return $this;
+    }
+
+    public function hasLocation()
+    {
+        return !is_null($this->location);
     }
 
     public function getLocation()
@@ -123,6 +133,11 @@ class PlaceSearchResult
         return $this;
     }
 
+    public function hasReference()
+    {
+        return !is_null($this->reference);
+    }
+
     public function getReference()
     {
         return $this->reference;
@@ -146,7 +161,18 @@ class PlaceSearchResult
 
     public function setTypes(array $types)
     {
-        $this->types = $types;
+        $this->types = array();
+
+        foreach ($types as $type) {
+            $this->addType($type);
+        }
+
+        return $this;
+    }
+
+    public function addType($type)
+    {
+        $this->types[] = $type;
         return $this;
     }
 
