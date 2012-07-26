@@ -9,36 +9,36 @@ use Buzz\Browser;
  *
  * @author GeLo <geloen.eric@gmail.com>
  */
-abstract class AbstractService 
+abstract class AbstractService
 {
     /**
-     * @var Buzz\Browser Buzz browser 
+     * @var Buzz\Browser Buzz browser
      */
     protected $browser = null;
-    
+
     /**
      * @var string Service API url
      */
     protected $url = null;
-    
+
     /**
      * @var boolean TRUE if the service uses HTTPS else FALSE
      */
     protected $https = false;
-    
+
     /**
      * @var string Format used by the service
      */
     protected $format = 'json';
-    
+
     /**
      * @var string The service API Key
      */
     protected $key = null;
-    
+
     /**
      * Creates a service
-     * 
+     *
      * @param string $url Service url
      * @param boolean $https TRUE if the service uses HTTPS else FALSE
      * @param string $format Format used by the service
@@ -49,9 +49,9 @@ abstract class AbstractService
         $this->setUrl($url);
         $this->setHttps($https);
         $this->setFormat($format);
-        is_null($browser) ? $this->browser = new Browser() : $this->browser = $browser;
+        is_null($browser) ? $this->browser = new Browser(new \Buzz\Client\Curl()) : $this->browser = $browser;
     }
-    
+
     /**
      * Gets the buzz browser
      *
@@ -61,7 +61,7 @@ abstract class AbstractService
     {
         return $this->browser;
     }
-    
+
     /**
      * Gets the service API url according to the https flag
      *
@@ -74,11 +74,11 @@ abstract class AbstractService
         else
             return $this->url;
     }
-    
+
     /**
      * Sets the service API url
      *
-     * @param string $url 
+     * @param string $url
      */
     public function setUrl($url)
     {
@@ -87,7 +87,7 @@ abstract class AbstractService
         else
             throw new \InvalidArgumentException('The service url must be a string value.');
     }
-    
+
     /**
      * Checks if the service uses HTTPS
      *
@@ -97,7 +97,7 @@ abstract class AbstractService
     {
         return $this->https;
     }
-    
+
     /**
      * Sets the service HTTPS flag
      *
@@ -110,7 +110,7 @@ abstract class AbstractService
         else
             throw new \InvalidArgumentException('The service https flag must be a boolean value.');
     }
-    
+
     /**
      * Gets the service format
      *
@@ -120,22 +120,22 @@ abstract class AbstractService
     {
         return $this->format;
     }
-    
+
     /**
      * Sets the service format
      *
-     * @param string $format 
+     * @param string $format
      */
     public function setFormat($format)
     {
         $availableFormats = array('json', 'xml');
-        
+
         if(in_array($format, $availableFormats))
             $this->format = $format;
         else
             throw new \InvalidArgumentException('The service format can only be : '.implode(', ', $availableFormats));
     }
-    
+
     /**
      * Gets the service API key
      *
@@ -145,11 +145,11 @@ abstract class AbstractService
     {
         return $this->key;
     }
-    
+
     /**
      * Sets the service API key
      *
-     * @param string $url 
+     * @param string $url
      */
     public function setKey($key)
     {
