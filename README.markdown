@@ -1,6 +1,6 @@
 Provides a Google Map integration for your Symfony2 Project.
 
-[![Build Status](https://secure.travis-ci.org/egeloen/IvoryGoogleMapBundle.png)](http://travis-ci.org/egeloen/IvoryGoogleMapBundle)
+[![Build Status](https://secure.travis-ci.org/yvann/IvoryGoogleMapBundle.png)](http://travis-ci.org/yvann/IvoryGoogleMapBundle)
 
 Currently, this bundle allows you to manage:
 
@@ -42,7 +42,7 @@ Documentation
          - [Geocoding API](http://github.com/egeloen/IvoryGoogleMapBundle/blob/master/Resources/doc/usage/services/geocoding/geocoder.md)
          - Directions API (Implemented & tested but not yet documented)
          - Places API
-            - Place search (Implemented but not tested neither documented)
+            - Place search (Implemented & tested but not yet documented)
    3. [Test](http://github.com/egeloen/IvoryGoogleMapBundle/blob/master/Resources/doc/test.md)
 
 TODO
