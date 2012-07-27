@@ -51,34 +51,64 @@ class PlaceSearchServiceTest extends AbstractServiceTest
             'Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse',
             self::$service->execute($placeSearchRequest)
         );
+    }
 
+    public function testExecuteInEmptyArea()
+    {
+        $placeSearchRequest = new PlaceSearchRequest();
         $placeSearchRequest->setLanguage('fr');
-        $placeSearchRequest->setKeyword(implode(',', array('restaurant', 'bar')));
-        $placeSearchRequest->setRadius(5000);
-        $placeSearchRequest->setLocation(new Coordinate(48.856614, 2.352222));
+        $placeSearchRequest->setKeyword(implode(',', array('museum')));
+        $placeSearchRequest->setRadius(1000);
+        // North Groenland
+        $placeSearchRequest->setLocation(new Coordinate(82.3558, -72.070312));
+        $placeSearchResponse = self::$service->execute($placeSearchRequest);
 
         $this->assertInstanceOf(
             'Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse',
-            self::$service->execute($placeSearchRequest)
+            $placeSearchResponse
         );
 
-        if (PlaceSearchStatus::ZERO_RESULTS === self::$service->execute($placeSearchRequest)->getStatus()) {
-            $this->assertEquals(
-                0,
-                count(self::$service->execute($placeSearchRequest)->getResults())
-            );
-        } else {
-            $this->assertGreaterThan(
-                0,
-                count(self::$service->execute($placeSearchRequest)->getResults())
-            );
+        $this->assertEquals(
+            PlaceSearchStatus::ZERO_RESULTS,
+            $placeSearchResponse->getStatus()
+        );
 
-            foreach (self::$service->execute($placeSearchRequest)->getResults() as $result) {
-                $this->assertInstanceOf(
-                    'Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult',
-                    $result
-                );
-            }
+        $this->assertEquals(
+            0,
+            count($placeSearchResponse->getResults())
+        );
+    }
+
+    public function testExecuteInArea()
+    {
+        $placeSearchRequest = new PlaceSearchRequest();
+        $placeSearchRequest->setLanguage('fr');
+        $placeSearchRequest->setKeyword(implode(',', array('restaurant', 'bar')));
+        $placeSearchRequest->setRadius(5000);
+        // Paris, France
+        $placeSearchRequest->setLocation(new Coordinate(48.856614, 2.352222));
+        $placeSearchResponse = self::$service->execute($placeSearchRequest);
+
+        $this->assertInstanceOf(
+            'Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse',
+            $placeSearchResponse
+        );
+
+        $this->assertEquals(
+            PlaceSearchStatus::OK,
+            $placeSearchResponse->getStatus()
+        );
+
+        $this->assertGreaterThan(
+            0,
+            count($placeSearchResponse->getResults())
+        );
+
+        foreach ($placeSearchResponse->getResults() as $result) {
+            $this->assertInstanceOf(
+                'Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult',
+                $result
+            );
         }
     }
 
