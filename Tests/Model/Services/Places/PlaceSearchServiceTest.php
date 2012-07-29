@@ -57,7 +57,7 @@ class PlaceSearchServiceTest extends AbstractServiceTest
     {
         $placeSearchRequest = new PlaceSearchRequest();
         $placeSearchRequest->setLanguage('fr');
-        $placeSearchRequest->setKeyword(implode(',', array('museum')));
+        $placeSearchRequest->setTypes(array('museum'));
         $placeSearchRequest->setRadius(1000);
         // North Groenland
         $placeSearchRequest->setLocation(new Coordinate(82.3558, -72.070312));
@@ -83,7 +83,7 @@ class PlaceSearchServiceTest extends AbstractServiceTest
     {
         $placeSearchRequest = new PlaceSearchRequest();
         $placeSearchRequest->setLanguage('fr');
-        $placeSearchRequest->setKeyword(implode(',', array('restaurant', 'bar')));
+        $placeSearchRequest->setTypes(array('restaurant', 'bar', 'food'));
         $placeSearchRequest->setRadius(5000);
         // Paris, France
         $placeSearchRequest->setLocation(new Coordinate(48.856614, 2.352222));

@@ -23,6 +23,11 @@ class PlaceSearchResponse
     protected $status = null;
 
     /**
+     * @var string Next page token
+     */
+    protected $nextPageToken = null;
+
+    /**
      * @var string contain a set of attributions about this listing which must be displayed to the user.
      */
     protected $htmlAttributions = array();
@@ -34,12 +39,13 @@ class PlaceSearchResponse
      * @param string $status
      * @param string $htmlAttributions
      */
-    public function __construct(array $results, $status, $htmlAttributions = array())
+    public function __construct(array $results, $status, $htmlAttributions = array(), $nextPageToken = null)
     {
         $this
             ->setResults($results)
             ->setStatus($status)
-            ->setHtmlAttributions($htmlAttributions);
+            ->setHtmlAttributions($htmlAttributions)
+            ->setNextPageToken($nextPageToken);
     }
 
     /**
@@ -56,11 +62,24 @@ class PlaceSearchResponse
      * Sets the place search results
      *
      * @param array $results
+     * @return \Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
      */
     public function setResults(array $results)
     {
         $this->results = array();
+        $this->addResults($results);
 
+        return $this;
+    }
+
+    /**
+     * Add place search results
+     *
+     * @param array $results
+     * @return \Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
+     */
+    public function addResults(array $results)
+    {
         foreach($results as $result) {
             $this->addResult($result);
         }
@@ -72,10 +91,13 @@ class PlaceSearchResponse
      * Add a place search result
      *
      * @param Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult $result
+     * @return \Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
      */
     public function addResult(PlaceSearchResult $result)
     {
         $this->results[] = $result;
+
+        return $this;
     }
 
     /**
@@ -92,6 +114,7 @@ class PlaceSearchResponse
      * Sets the place search results status
      *
      * @param string $status
+     * @return \Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
      */
     public function setStatus($status)
     {
@@ -100,6 +123,39 @@ class PlaceSearchResponse
         } else {
             throw new \InvalidArgumentException('The place search status can only be : '.implode(', ', PlaceSearchStatus::getStatuses()));
         }
+
+        return $this;
+    }
+
+    /**
+     * Gets the next page token presence
+     *
+     * @return boolean
+     */
+    public function hasNextPageToken()
+    {
+        return !is_null($this->nextPageToken);
+    }
+
+    /**
+     * Gets the next page token
+     *
+     * @return string
+     */
+    public function getNextPageToken()
+    {
+        return $this->nextPageToken;
+    }
+
+    /**
+     * Sets the next page token
+     *
+     * @param string $nextPageToken
+     * @return \Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
+     */
+    public function setNextPageToken($nextPageToken)
+    {
+        $this->nextPageToken = $nextPageToken;
 
         return $this;
     }
@@ -118,6 +174,7 @@ class PlaceSearchResponse
      * Sets the place search response html attribution
      *
      * @param array $htmlAttributions
+     * @return \Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
      */
     public function setHtmlAttributions(array $htmlAttributions)
     {
@@ -134,10 +191,12 @@ class PlaceSearchResponse
      * Add a place search response html attribution
      *
      * @param string $htmlAttribution
+     * @return \Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
      */
     public function addHtmlAttribution($htmlAttribution)
     {
         $this->htmlAttributions[] = $htmlAttribution;
+
         return $this;
     }
 }

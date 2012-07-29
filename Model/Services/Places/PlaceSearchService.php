@@ -3,13 +3,11 @@
 namespace Ivory\GoogleMapBundle\Model\Services\Places;
 
 use Ivory\GoogleMapBundle\Model\Services\AbstractService;
-use Ivory\GoogleMapBundle\Model\Services\AbstractRequest;
 use Ivory\GoogleMapBundle\Model\Base\Coordinate;
 
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchRequest;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult;
-use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchServiceInterface;
 
 /**
  * Google map place search service
@@ -17,7 +15,7 @@ use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchServiceInterface;
  * @see https://developers.google.com/maps/documentation/places/#PlaceSearches
  * @author Yvann Boucher <yvann.boucher@gmail.com>
  */
-class PlaceSearchService extends AbstractService implements PlaceSearchServiceInterface
+class PlaceSearchService extends AbstractService
 {
     /**
      * Creates a place search service
@@ -36,11 +34,31 @@ class PlaceSearchService extends AbstractService implements PlaceSearchServiceIn
      *
      * @return Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
      */
-    public function execute(AbstractRequest $placeSearchRequest)
+    public function execute(PlaceSearchRequest $placeSearchRequest)
     {
-        $response = $this->browser->get($this->generateUrl($placeSearchRequest));
+        $placeSearchResponse = $this->getPlaceSearchResponse($placeSearchRequest);
 
-        return $this->generatePlaceSearchResponse($this->parse($response->getContent()));
+        while (PlaceSearchStatus::OK === $placeSearchResponse->getStatus() && $placeSearchResponse->hasNextPageToken()) {
+            sleep(1);
+            $placeSearchRequest->setPageToken($placeSearchResponse->getNextPageToken());
+            $placeSearchResponse = $this->getPlaceSearchResponse($placeSearchRequest, $placeSearchResponse);
+        }
+
+        return $placeSearchResponse;
+    }
+
+    /**
+     *  Calls the provider API to return response
+     *
+     * @param PlaceSearchRequest $placeSearchRequest
+     * @return Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
+     */
+    protected function getPlaceSearchResponse(PlaceSearchRequest $placeSearchRequest, PlaceSearchResponse $placeSearchResponse = null)
+    {
+        return $this->generatePlaceSearchResponse(
+            $this->parse($this->browser->get($this->generateUrl($placeSearchRequest))->getContent()),
+            $placeSearchResponse
+        );
     }
 
     /**
@@ -69,6 +87,7 @@ class PlaceSearchService extends AbstractService implements PlaceSearchServiceIn
         !$placeSearchRequest->hasLanguage() ?: $httpQuery['language'] = $placeSearchRequest->getLanguage();
         !$placeSearchRequest->hasName() ?: $httpQuery['name'] = $placeSearchRequest->getName();
         !$placeSearchRequest->hasKeyword() ?: $httpQuery['keyword'] = $placeSearchRequest->getKeyword();
+        !$placeSearchRequest->hasPageToken() ?: $httpQuery['pagetoken'] = $placeSearchRequest->getPageToken();
 
         return sprintf('%s/%s?%s',
             $this->getUrl(),
@@ -78,18 +97,30 @@ class PlaceSearchService extends AbstractService implements PlaceSearchServiceIn
     }
 
     /**
-     * Generate place search response
+     * Generate place search response or append results if place search response is provided
      *
-     * @param stdClass $placeSearchResponse
+     * @param stdClass $placeSearchResponseProvided
+     * @param Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse $placeSearchResponse
      * @return Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
      */
-    protected function generatePlaceSearchResponse(\stdClass $placeSearchResponse)
+    protected function generatePlaceSearchResponse(\stdClass $placeSearchResponseProvided, PlaceSearchResponse $placeSearchResponse = null)
     {
-        return new PlaceSearchResponse(
-            $this->generatePlaceSearchResults($placeSearchResponse->results),
-            $placeSearchResponse->status,
-            $placeSearchResponse->html_attributions
-        );
+        if (null === $placeSearchResponse) {
+            $placeSearchResponse = new PlaceSearchResponse(
+                $this->generatePlaceSearchResults($placeSearchResponseProvided->results),
+                $placeSearchResponseProvided->status,
+                $placeSearchResponseProvided->html_attributions,
+                isset($placeSearchResponseProvided->next_page_token) ? $placeSearchResponseProvided->next_page_token : null
+            );
+        } else {
+            $placeSearchResponse
+                ->addResults($this->generatePlaceSearchResults($placeSearchResponseProvided->results))
+                ->setStatus($placeSearchResponseProvided->status)
+                ->setHtmlAttributions($placeSearchResponseProvided->html_attributions)
+                ->setNextPageToken(isset($placeSearchResponseProvided->next_page_token) ? $placeSearchResponseProvided->next_page_token : null);
+        }
+
+        return $placeSearchResponse;
     }
 
     /**

@@ -45,6 +45,12 @@ class PlaceSearchRequest extends AbstractRequest
     protected $types = array();
 
     /**
+     * @var string The token that can be used to return up to 20 additional results
+     * @see https://developers.google.com/places/documentation/#PlaceSearchPaging
+     */
+    protected $pagetoken = null;
+
+    /**
      * @return boolean
      */
     public function hasLocation()
@@ -155,7 +161,13 @@ class PlaceSearchRequest extends AbstractRequest
     public function setTypes(array $types)
     {
         $this->types = array();
+        $this->addTypes($types);
 
+        return $this;
+    }
+
+    public function addTypes(array $types)
+    {
         foreach ($types as $type) {
             $this->addType($type);
         }
@@ -166,6 +178,25 @@ class PlaceSearchRequest extends AbstractRequest
     public function addType($type)
     {
         $this->types[] = $type;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasPageToken()
+    {
+        return !is_null($this->pagetoken);
+    }
+
+    public function getPageToken()
+    {
+        return $this->pagetoken;
+    }
+
+    public function setPageToken($pagetoken)
+    {
+        $this->pagetoken = $pagetoken;
         return $this;
     }
 }
