@@ -107,4 +107,14 @@ class Coordinate
         else
             throw new \InvalidArgumentException('The no wrap coordinate property must be a boolean value.');
     }
+
+    /**
+     * Return the coordinates
+     *
+     * @return string The coordinates
+     */
+    public function __toString()
+    {
+        return sprintf('%s, %s', $this->getLatitude(), $this->getLongitude());
+    }
 }
