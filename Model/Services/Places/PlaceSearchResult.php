@@ -3,6 +3,7 @@
 namespace Ivory\GoogleMapBundle\Model\Services\Places;
 
 use Ivory\GoogleMapBundle\Model\Base\Coordinate;
+use Ivory\GoogleMapBundle\Model\Services\Places\PlaceEventResult;
 
 /**
  * PlaceSearchResult represents a google map place result
@@ -47,6 +48,11 @@ class PlaceSearchResult
      * @see https://developers.google.com/maps/documentation/places/supported_types
      */
     protected $types = array();
+
+    /**
+     * @var array contains current events happening
+     */
+    protected $events = array();
 
     /**
      * @var string contains a feature name of a nearby location. Often this feature refers to a street or neighborhood within the given results.
@@ -162,7 +168,6 @@ class PlaceSearchResult
     public function setTypes(array $types)
     {
         $this->types = array();
-
         foreach ($types as $type) {
             $this->addType($type);
         }
@@ -173,6 +178,32 @@ class PlaceSearchResult
     public function addType($type)
     {
         $this->types[] = $type;
+        return $this;
+    }
+
+    public function hasEvents()
+    {
+        return 0 < count($this->events);
+    }
+
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    public function setEvents(array $events)
+    {
+        $this->events = array();
+        foreach ($events as $event) {
+            $this->addEvent($event);
+        }
+
+        return $this;
+    }
+
+    public function addEvent(PlaceEventResult $event)
+    {
+        $this->events[] = $event;
         return $this;
     }
 

@@ -148,10 +148,26 @@ class PlaceSearchService extends AbstractService
      */
     protected function generatePlaceSearchResult(\stdClass $placeSearchResult)
     {
+        $events = array();
+        if (isset($placeSearchResult->events)) {
+            foreach ($placeSearchResult->events as $event) {
+                $e = new PlaceEventResult();
+                $e
+                    ->setId($event->id)
+                    ->setDuration(isset($event->duration) ? $event->duration : null)
+                    ->setStartTime(isset($event->start_time) ? $event->start_time : null)
+                    ->setSummary(isset($event->summary) ? $event->summary : null)
+                    ->setUrl(isset($event->url) ? $event->url : null);
+
+                $events[] = $e;
+            }
+        }
+
         $result = new PlaceSearchResult();
         return $result
             ->setId($placeSearchResult->id)
             ->setReference($placeSearchResult->reference)
+            ->setEvents($events)
             ->setLocation(
                 new Coordinate(
                     $placeSearchResult->geometry->location->lat,
