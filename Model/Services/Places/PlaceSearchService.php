@@ -39,7 +39,7 @@ class PlaceSearchService extends AbstractService
         $placeSearchResponse = $this->getPlaceSearchResponse($placeSearchRequest);
 
         while (PlaceSearchStatus::OK === $placeSearchResponse->getStatus() && $placeSearchResponse->hasNextPageToken()) {
-            sleep(1);
+            sleep(2);
             $placeSearchRequest->setPageToken($placeSearchResponse->getNextPageToken());
             $placeSearchResponse = $this->getPlaceSearchResponse($placeSearchRequest, $placeSearchResponse);
         }
