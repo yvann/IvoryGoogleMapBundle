@@ -800,7 +800,7 @@
                 <argument>%ivory_google_map.place_search_request.sensor%</argument>
             </call>
             <call method="setKey">
-                <argument>%ivory_google_map.api_key.browser%</argument>
+                <argument>%ivory_google_map.place_search_request.key%</argument>
             </call>
         </service>
 

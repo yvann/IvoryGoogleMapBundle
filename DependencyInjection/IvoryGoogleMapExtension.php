@@ -29,9 +29,6 @@ class IvoryGoogleMapExtension extends Extension
         foreach(array('services.xml') as $file)
             $loader->load($file);
 
-        // Api key section
-        $this->loadApiKey($config, $container);
-
         // Map sections
         $this->loadMap($config, $container);
 
@@ -79,18 +76,6 @@ class IvoryGoogleMapExtension extends Extension
         $this->loadPlaceSearchRequest($config, $container);
 
         $loader->load('twig.xml');
-    }
-
-    /**
-     * Loads api key configuration
-     *
-     * @param array $config
-     * @param ContainerBuilder $container
-     */
-    protected function loadApiKey(array $config, ContainerBuilder $container)
-    {
-        $container->setParameter('ivory_google_map.api_key.server', $config['api_key']['server']);
-        $container->setParameter('ivory_google_map.api_key.browser', $config['api_key']['browser']);
     }
 
     /**
@@ -563,5 +548,6 @@ class IvoryGoogleMapExtension extends Extension
     {
         $container->setParameter('ivory_google_map.place_search_request.sensor', $config['place_search_request']['sensor']);
         $container->setParameter('ivory_google_map.place_search_request.locale', $config['place_search_request']['locale']);
+        $container->setParameter('ivory_google_map.place_search_request.key', $config['place_search_request']['key']);
     }
 }

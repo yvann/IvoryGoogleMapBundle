@@ -27,9 +27,6 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('ivory_google_map');
 
-        // Api key section
-        $this->addApiKeySection($rootNode);
-
         // Map sections
         $this->addMapSection($rootNode);
 
@@ -77,24 +74,6 @@ class Configuration implements ConfigurationInterface
         $this->addPlaceSearchRequestSection($rootNode);
 
         return $treeBuilder;
-    }
-
-    /**
-     * Add the api key section
-     *
-     * @param Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
-     */
-    protected function addApiKeySection(ArrayNodeDefinition $node)
-    {
-        $node
-            ->children()
-                ->arrayNode('api_key')->addDefaultsIfNotSet()
-                    ->children()
-                        ->scalarNode('server')->defaultValue(null)->end()
-                        ->scalarNode('browser')->defaultValue(null)->end()
-                    ->end()
-                ->end()
-            ->end();
     }
 
     /**
@@ -852,6 +831,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->booleanNode('sensor')->defaultFalse()->end()
                         ->scalarNode('locale')->defaultValue(null)->end()
+                        ->scalarNode('key')->defaultValue(null)->end()
                     ->end()
                 ->end()
             ->end();
