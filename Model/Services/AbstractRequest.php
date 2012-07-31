@@ -15,6 +15,11 @@ abstract class AbstractRequest
     protected $sensor = false;
 
     /**
+     * @var string This key identifies your application for purposes of quota management
+     */
+    protected $key = null;
+
+    /**
      * Checks if the request has a sensor
      *
      * @return boolean TRUE if the request has a sensor else FALSE
@@ -37,5 +42,40 @@ abstract class AbstractRequest
         } else {
             throw new \InvalidArgumentException('The request sensor flag must be a boolean value.');
         }
+    }
+
+    /**
+     * Sets the API key
+     *
+     * @param string $key
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+        return $this;
+    }
+
+    /**
+     * Checks if the request has an API key
+     *
+     * @return boolean TRUE if the request has an API key else FALSE
+     */
+    public function hasKey()
+    {
+        return !is_null($this->key);
+    }
+
+    /**
+     * Gets the API key
+     *
+     * @return string
+     */
+    public function getKey()
+    {
+        if (is_null($this->key)) {
+            throw new \InvalidArgumentException('The API key must be defined');
+        }
+
+        return $this->key;
     }
 }

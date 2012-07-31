@@ -71,7 +71,7 @@ class PlaceSearchService extends AbstractService
     protected function generateUrl(PlaceSearchRequest $placeSearchRequest)
     {
         $httpQuery = array(
-            'key' => $this->getKey(),
+            'key' => $placeSearchRequest->getKey(),
             'sensor' => $placeSearchRequest->hasSensor() ? 'true' : 'false',
         );
 

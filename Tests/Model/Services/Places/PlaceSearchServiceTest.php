@@ -24,7 +24,6 @@ class PlaceSearchServiceTest extends AbstractServiceTest
     {
         self::$service = new PlaceSearchService();
         self::$service
-            ->setKey($_SERVER['API_KEY'])
             ->setHttps(true);
     }
 
@@ -46,6 +45,8 @@ class PlaceSearchServiceTest extends AbstractServiceTest
     public function testExecute()
     {
         $placeSearchRequest = new PlaceSearchRequest();
+        $placeSearchRequest
+            ->setKey('123456789abcdefghijklmnopqrstuvwxyz');
 
         $this->assertInstanceOf(
             'Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse',
@@ -53,72 +54,16 @@ class PlaceSearchServiceTest extends AbstractServiceTest
         );
     }
 
-    public function testExecuteInEmptyArea()
-    {
-        $placeSearchRequest = new PlaceSearchRequest();
-        $placeSearchRequest->setLanguage('fr');
-        $placeSearchRequest->setTypes(array('museum'));
-        $placeSearchRequest->setRadius(1000);
-        // North Groenland
-        $placeSearchRequest->setLocation(new Coordinate(82.3558, -72.070312));
-        $placeSearchResponse = self::$service->execute($placeSearchRequest);
-
-        $this->assertInstanceOf(
-            'Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse',
-            $placeSearchResponse
-        );
-
-        $this->assertEquals(
-            PlaceSearchStatus::ZERO_RESULTS,
-            $placeSearchResponse->getStatus()
-        );
-
-        $this->assertEquals(
-            0,
-            count($placeSearchResponse->getResults())
-        );
-    }
-
-    public function testExecuteInArea()
-    {
-        $placeSearchRequest = new PlaceSearchRequest();
-        $placeSearchRequest->setLanguage('fr');
-        $placeSearchRequest->setTypes(array('restaurant', 'bar', 'food'));
-        $placeSearchRequest->setRadius(5000);
-        // Paris, France
-        $placeSearchRequest->setLocation(new Coordinate(48.856614, 2.352222));
-        $placeSearchResponse = self::$service->execute($placeSearchRequest);
-
-        $this->assertInstanceOf(
-            'Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse',
-            $placeSearchResponse
-        );
-
-        $this->assertEquals(
-            PlaceSearchStatus::OK,
-            $placeSearchResponse->getStatus()
-        );
-
-        $this->assertGreaterThan(
-            0,
-            count($placeSearchResponse->getResults())
-        );
-
-        foreach ($placeSearchResponse->getResults() as $result) {
-            $this->assertInstanceOf(
-                'Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult',
-                $result
-            );
-        }
-    }
-
     public function testGenerateUrl()
     {
         $placeSearchRequest = new PlaceSearchRequest();
+        $placeSearchRequest
+            ->setKey('123456789abcdefghijklmnopqrstuvwxyz');
+
         $this->assertEquals(
             sprintf(
                 'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false',
-                self::$service->getKey()
+                $placeSearchRequest->getKey()
             ),
             self::executeMethod('generateUrl', array($placeSearchRequest))
         );
@@ -127,7 +72,7 @@ class PlaceSearchServiceTest extends AbstractServiceTest
         $this->assertEquals(
             sprintf(
                 'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false&language=fr',
-                self::$service->getKey()
+                $placeSearchRequest->getKey()
             ),
             self::executeMethod('generateUrl', array($placeSearchRequest))
         );
@@ -136,7 +81,7 @@ class PlaceSearchServiceTest extends AbstractServiceTest
         $this->assertEquals(
             sprintf(
                 'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false&language=fr&keyword=vin%%2Cviande',
-                self::$service->getKey()
+                $placeSearchRequest->getKey()
             ),
             self::executeMethod('generateUrl', array($placeSearchRequest))
         );
@@ -145,7 +90,7 @@ class PlaceSearchServiceTest extends AbstractServiceTest
         $this->assertEquals(
             sprintf(
                 'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false&radius=50&language=fr&keyword=vin%%2Cviande',
-                self::$service->getKey()
+                $placeSearchRequest->getKey()
             ),
             self::executeMethod('generateUrl', array($placeSearchRequest))
         );

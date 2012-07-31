@@ -246,3 +246,15 @@ ivory_google_map:
         travel_mode: "walking"
         unit_system: "imperial"
         sensor: true
+
+    api_key:
+        server:   AIzaSyDU99t4hE_8KSpv1eV7NuFUBrJ1QfRc66k
+        browser:  AIzaSyDVbcasYGTYfjEX_EPFsGwgd414ywBMHQg
+
+    place_search:
+        url: http://maps.googleapis.com/maps/api/place/search
+        https: true
+
+    place_search_request:
+        sensor: true
+        locale: fr

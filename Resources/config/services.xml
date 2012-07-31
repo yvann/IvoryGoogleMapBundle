@@ -789,10 +789,6 @@
             <argument>%ivory_google_map.place_search.https%</argument>
             <argument>%ivory_google_map.place_search.format%</argument>
             <!--<argument type="service" id="buzz" />-->
-
-            <call method="setKey">
-                <argument>%ivory_google_map.api_key.server%</argument>
-            </call>
         </service>
 
         <!-- Place search request service -->
@@ -802,6 +798,9 @@
             </call>
             <call method="setSensor">
                 <argument>%ivory_google_map.place_search_request.sensor%</argument>
+            </call>
+            <call method="setKey">
+                <argument>%ivory_google_map.api_key.browser%</argument>
             </call>
         </service>
 
