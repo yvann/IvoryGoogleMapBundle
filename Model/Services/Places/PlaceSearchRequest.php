@@ -4,6 +4,7 @@ namespace Ivory\GoogleMapBundle\Model\Services\Places;
 
 use Ivory\GoogleMapBundle\Model\Services\AbstractRequest;
 use Ivory\GoogleMapBundle\Model\Base\Coordinate;
+use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchRankBy;
 
 /**
  * PlaceSearchRequest represents a google map places request
@@ -37,6 +38,11 @@ class PlaceSearchRequest extends AbstractRequest
      * @var string A term to be matched against the names of Places. Results will be restricted to those containing the passed name value.
      */
     protected $name = null;
+
+    /**
+     * @var string Specifies the order in which results are listed. Possible values are "prominence" and "distance"
+     */
+    protected $rankBy = PlaceSearchRankBy::PROMINENCE;
 
     /**
      * @var array Restricts the results to Places matching at least one of the specified types.
@@ -255,5 +261,39 @@ class PlaceSearchRequest extends AbstractRequest
     {
         $this->pagetoken = $pagetoken;
         return $this;
+    }
+
+    /**
+     * @param string $rankBy
+     */
+    public function setRankBy($rankBy)
+    {
+        if (in_array($rankBy, PlaceSearchRankBy::getValues())) {
+            if (PlaceSearchRankBy::DISTANCE === $rankBy) {
+                if ($this->hasRadius()) {
+                    throw new \InvalidArgumentException('Radius must not be included if rankBy is "distance"');
+                }
+                if (0 === count(array_filter(array(
+                    $this->hasKeyword(),
+                    $this->hasName(),
+                    $this->hasTypes()
+                )))) {
+                    throw new \InvalidArgumentException('One or more of "keyword", "keyword", or "types" is required if rankBy is "distance"');
+                }
+            }
+            $this->rankBy = $rankBy;
+        } else {
+            throw new \InvalidArgumentException('The place search rank by can only be : '.implode(', ',PlaceSearchRankBy::getValues()));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRankBy()
+    {
+        return $this->rankBy;
     }
 }

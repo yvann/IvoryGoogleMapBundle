@@ -3,6 +3,7 @@
 namespace Ivory\GoogleMapBundle\Tests\Model\Services\Places;
 
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchRequest;
+use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchRankBy;
 use Ivory\GoogleMapBundle\Model\Base\Coordinate;
 
 /**
@@ -30,6 +31,7 @@ class PlaceSearchRequestTest extends \PHPUnit_Framework_TestCase
      */
     public function testDefaultValues()
     {
+        $this->assertEquals(PlaceSearchRankBy::PROMINENCE, self::$placeSearchRequest->getRankBy());
         $this->assertFalse(self::$placeSearchRequest->hasLocation());
         $this->assertFalse(self::$placeSearchRequest->hasRadius());
         $this->assertFalse(self::$placeSearchRequest->hasKeyword());
@@ -103,5 +105,54 @@ class PlaceSearchRequestTest extends \PHPUnit_Framework_TestCase
         self::$placeSearchRequest->setTypes(array());
         $this->assertEquals(array(), self::$placeSearchRequest->getTypes());
         $this->assertFalse(self::$placeSearchRequest->hasTypes());
+    }
+
+    /**
+     * Check the rank by getter/setter
+     */
+    public function testRankByProminence()
+    {
+        self::$placeSearchRequest = new PlaceSearchRequest();
+
+        self::$placeSearchRequest->setRankBy(PlaceSearchRankBy::PROMINENCE);
+        $this->assertEquals(PlaceSearchRankBy::PROMINENCE, self::$placeSearchRequest->getRankBy());
+    }
+
+    /**
+     * Check the rank by getter/setter
+     */
+    public function testRankByDistanceWithRadius()
+    {
+        self::$placeSearchRequest = new PlaceSearchRequest();
+
+        self::$placeSearchRequest->setRadius(5000);
+        $this->setExpectedException('InvalidArgumentException');
+        self::$placeSearchRequest->setRankBy(PlaceSearchRankBy::DISTANCE);
+    }
+
+    /**
+     * Check the rank by getter/setter
+     */
+    public function testRankByDistanceWithoutRadiusWithoutOtherParameter()
+    {
+        self::$placeSearchRequest = new PlaceSearchRequest();
+
+        self::$placeSearchRequest->setRadius(null);
+        $this->setExpectedException('InvalidArgumentException');
+        self::$placeSearchRequest->setRankBy(PlaceSearchRankBy::DISTANCE);
+    }
+
+    /**
+     * Check the rank by getter/setter
+     */
+    public function testRankByDistanceWithoutRadiusWithOtherParameter()
+    {
+        self::$placeSearchRequest = new PlaceSearchRequest();
+
+        self::$placeSearchRequest
+            ->setRadius(null)
+            ->setTypes(array('restaurant', 'bar'))
+            ->setRankBy(PlaceSearchRankBy::DISTANCE);
+        $this->assertEquals(PlaceSearchRankBy::DISTANCE, self::$placeSearchRequest->getRankBy());
     }
 }
