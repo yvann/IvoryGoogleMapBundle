@@ -14,7 +14,7 @@ use Ivory\GoogleMapBundle\Model\Base\Coordinate;
 class PlaceSearchRequest extends AbstractRequest
 {
     /**
-     * @var string|Ivory\GoogleMapBundle\Model\Base\Coordinate The latitude/longitude around which to retrieve Place information. This must be specified as latitude,longitude.
+     * @var Ivory\GoogleMapBundle\Model\Base\Coordinate The latitude/longitude around which to retrieve Place information. This must be specified as latitude,longitude.
      */
     protected $location = null;
 
@@ -58,11 +58,18 @@ class PlaceSearchRequest extends AbstractRequest
         return !is_null($this->location);
     }
 
+    /**
+     * @return \Ivory\GoogleMapBundle\Model\Base\Coordinate|null
+     */
     public function getLocation()
     {
         return $this->location;
     }
 
+    /**
+     * @param \Ivory\GoogleMapBundle\Model\Base\Coordinate $location
+     * @return PlaceSearchRequest
+     */
     public function setLocation(Coordinate $location)
     {
         $this->location = $location;
@@ -77,11 +84,18 @@ class PlaceSearchRequest extends AbstractRequest
         return !is_null($this->radius);
     }
 
+    /**
+     * @return int|null
+     */
     public function getRadius()
     {
         return $this->radius;
     }
 
+    /**
+     * @param $radius
+     * @return PlaceSearchRequest
+     */
     public function setRadius($radius)
     {
         $this->radius = $radius;
@@ -96,11 +110,18 @@ class PlaceSearchRequest extends AbstractRequest
         return !is_null($this->keyword);
     }
 
+    /**
+     * @return null|string
+     */
     public function getKeyword()
     {
         return $this->keyword;
     }
 
+    /**
+     * @param $keyword
+     * @return PlaceSearchRequest
+     */
     public function setKeyword($keyword)
     {
         $this->keyword = $keyword;
@@ -115,11 +136,18 @@ class PlaceSearchRequest extends AbstractRequest
         return !is_null($this->language);
     }
 
+    /**
+     * @return null|string
+     */
     public function getLanguage()
     {
         return $this->language;
     }
 
+    /**
+     * @param $language
+     * @return PlaceSearchRequest
+     */
     public function setLanguage($language)
     {
         $this->language = $language;
@@ -134,11 +162,18 @@ class PlaceSearchRequest extends AbstractRequest
         return !is_null($this->name);
     }
 
+    /**
+     * @return null|string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param $name
+     * @return PlaceSearchRequest
+     */
     public function setName($name)
     {
         $this->name = $name;
@@ -153,11 +188,18 @@ class PlaceSearchRequest extends AbstractRequest
         return 0 < count($this->types);
     }
 
+    /**
+     * @return array
+     */
     public function getTypes()
     {
         return $this->types;
     }
 
+    /**
+     * @param array $types
+     * @return PlaceSearchRequest
+     */
     public function setTypes(array $types)
     {
         $this->types = array();
@@ -166,6 +208,10 @@ class PlaceSearchRequest extends AbstractRequest
         return $this;
     }
 
+    /**
+     * @param array $types
+     * @return PlaceSearchRequest
+     */
     public function addTypes(array $types)
     {
         foreach ($types as $type) {
@@ -175,6 +221,10 @@ class PlaceSearchRequest extends AbstractRequest
         return $this;
     }
 
+    /**
+     * @param $type
+     * @return PlaceSearchRequest
+     */
     public function addType($type)
     {
         $this->types[] = $type;
@@ -189,11 +239,18 @@ class PlaceSearchRequest extends AbstractRequest
         return !is_null($this->pagetoken);
     }
 
+    /**
+     * @return null|string
+     */
     public function getPageToken()
     {
         return $this->pagetoken;
     }
 
+    /**
+     * @param $pagetoken
+     * @return PlaceSearchRequest
+     */
     public function setPageToken($pagetoken)
     {
         $this->pagetoken = $pagetoken;

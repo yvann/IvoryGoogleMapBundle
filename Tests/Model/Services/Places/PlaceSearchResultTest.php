@@ -2,8 +2,10 @@
 
 namespace Ivory\GoogleMapBundle\Tests\Model\Services\Places;
 
+use Ivory\GoogleMapBundle\Model\Services\Places\PlaceEventResult;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult;
 use Ivory\GoogleMapBundle\Model\Base\Coordinate;
+
 
 /**
  * PlaceSearchResult test
@@ -100,6 +102,29 @@ class PlaceSearchResultTest extends \PHPUnit_Framework_TestCase
         self::$placeSearchResult->setTypes(array());
         $this->assertEquals(array(), self::$placeSearchResult->getTypes());
         $this->assertFalse(self::$placeSearchResult->hasTypes());
+    }
+
+    /**
+     * Check the event getter/setter
+     */
+    public function testEvents()
+    {
+        self::$placeSearchResult->setEvents(array(new PlaceEventResult(), new PlaceEventResult()));
+        $this->assertEquals(
+            array(new PlaceEventResult(), new PlaceEventResult()),
+            self::$placeSearchResult->getEvents()
+        );
+        $this->assertTrue(self::$placeSearchResult->hasEvents());
+
+        self::$placeSearchResult->addEvent(new PlaceEventResult());
+        $this->assertEquals(
+            array(new PlaceEventResult(), new PlaceEventResult(), new PlaceEventResult()),
+            self::$placeSearchResult->getEvents()
+        );
+
+        self::$placeSearchResult->setEvents(array());
+        $this->assertEquals(array(), self::$placeSearchResult->getEvents());
+        $this->assertFalse(self::$placeSearchResult->hasEvents());
     }
 
     /**
