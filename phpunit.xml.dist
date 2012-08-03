@@ -13,6 +13,7 @@
         <server name="SYMFONY" value="vendor/symfony/src" />
         <server name="BUZZ" value="vendor/buzz/lib" />
         <server name="GEOCODER" value="vendor/geocoder/src" />
+        <server name="SENSIO" value="vendor/sensio/buzz-bundle" />
     </php>
     <testsuites>
         <testsuite name="IvoryGoogleMapBundle Test Suite">

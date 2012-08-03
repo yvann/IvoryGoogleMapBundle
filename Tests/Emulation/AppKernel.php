@@ -12,7 +12,8 @@ class AppKernel extends Kernel
     {
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Ivory\GoogleMapBundle\IvoryGoogleMapBundle()
+            new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
+            new Sensio\Bundle\BuzzBundle\SensioBuzzBundle(),
         );
 
         return $bundles;

@@ -9,6 +9,8 @@ use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchRequest;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult;
 
+use Buzz\Browser;
+
 /**
  * Google map place search service
  *

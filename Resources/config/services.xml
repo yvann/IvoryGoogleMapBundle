@@ -788,7 +788,7 @@
             <argument>%ivory_google_map.place_search.url%</argument>
             <argument>%ivory_google_map.place_search.https%</argument>
             <argument>%ivory_google_map.place_search.format%</argument>
-            <!--<argument type="service" id="buzz" />-->
+            <argument type="service" id="buzz" />
         </service>
 
         <!-- Place search request service -->

@@ -10,7 +10,8 @@ $loader = new UniversalClassLoader();
 $loader->registerNamespaces(array(
     'Symfony'  => __DIR__.'/'.$_SERVER['SYMFONY'],
     'Buzz'     => __DIR__.'/'.$_SERVER['BUZZ'],
-    'Geocoder' => __DIR__.'/'.$_SERVER['GEOCODER']
+    'Geocoder' => __DIR__.'/'.$_SERVER['GEOCODER'],
+    'Sensio'   => __DIR__.'/'.$_SERVER['SENSIO'],
 ));
 $loader->register();
 
