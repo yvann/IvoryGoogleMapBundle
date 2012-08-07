@@ -30,11 +30,6 @@ class PlaceSearchRequest extends AbstractRequest
     protected $keyword = null;
 
     /**
-     * @var string The language code, indicating in which language the results should be returned.
-     */
-    protected $language = null;
-
-    /**
      * @var string A term to be matched against the names of Places. Results will be restricted to those containing the passed name value.
      */
     protected $name = null;
@@ -131,32 +126,6 @@ class PlaceSearchRequest extends AbstractRequest
     public function setKeyword($keyword)
     {
         $this->keyword = $keyword;
-        return $this;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function hasLanguage()
-    {
-        return !is_null($this->language);
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getLanguage()
-    {
-        return $this->language;
-    }
-
-    /**
-     * @param $language
-     * @return PlaceSearchRequest
-     */
-    public function setLanguage($language)
-    {
-        $this->language = $language;
         return $this;
     }
 

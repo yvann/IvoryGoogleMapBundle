@@ -74,6 +74,8 @@ class IvoryGoogleMapExtension extends Extension
         $this->loadDirectionsRequest($config, $container);
         $this->loadPlaceSearch($config, $container);
         $this->loadPlaceSearchRequest($config, $container);
+        $this->loadPlaceDetails($config, $container);
+        $this->loadPlaceDetailsRequest($config, $container);
 
         $loader->load('twig.xml');
     }
@@ -549,5 +551,31 @@ class IvoryGoogleMapExtension extends Extension
         $container->setParameter('ivory_google_map.place_search_request.sensor', $config['place_search_request']['sensor']);
         $container->setParameter('ivory_google_map.place_search_request.locale', $config['place_search_request']['locale']);
         $container->setParameter('ivory_google_map.place_search_request.key', $config['place_search_request']['key']);
+    }
+
+    /**
+     * Loads place details configuration
+     *
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    protected function loadPlaceDetails(array $config, ContainerBuilder $container)
+    {
+        $container->setParameter('ivory_google_map.place_details.https', $config['place_details']['https']);
+        $container->setParameter('ivory_google_map.place_details.format', $config['place_details']['format']);
+        $container->setParameter('ivory_google_map.place_details.url', $config['place_details']['url']);
+    }
+
+    /**
+     * Loads place details request configuration
+     *
+     * @param array $config
+     * @param ContainerBuilder $container
+     */
+    protected function loadPlaceDetailsRequest(array $config, ContainerBuilder $container)
+    {
+        $container->setParameter('ivory_google_map.place_details_request.sensor', $config['place_details_request']['sensor']);
+        $container->setParameter('ivory_google_map.place_details_request.locale', $config['place_details_request']['locale']);
+        $container->setParameter('ivory_google_map.place_details_request.key', $config['place_details_request']['key']);
     }
 }

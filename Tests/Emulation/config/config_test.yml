@@ -255,3 +255,12 @@ ivory_google_map:
         sensor: true
         locale: fr
         key: AIzaSyDVbcasYGTYfjEX_EPFsGwgd414ywBMHQg
+
+    place_details:
+        url: http://maps.googleapis.com/maps/api/place/details
+        https: true
+
+    place_details_request:
+        sensor: true
+        locale: fr
+        key: AIzaSyDVbcasYGTYfjEX_EPFsGwgd414ywBMHQg

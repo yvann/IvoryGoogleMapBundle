@@ -50,6 +50,8 @@
         <parameter key="ivory_google_map.places.class">Ivory\GoogleMapBundle\Model\Services\Places\PlacesService</parameter>
         <parameter key="ivory_google_map.place_search.class">Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchService</parameter>
         <parameter key="ivory_google_map.place_search_request.class">Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchRequest</parameter>
+        <parameter key="ivory_google_map.place_details.class">Ivory\GoogleMapBundle\Model\Services\Places\PlaceDetailsService</parameter>
+        <parameter key="ivory_google_map.place_details_request.class">Ivory\GoogleMapBundle\Model\Services\Places\PlaceDetailsRequest</parameter>
 
         <!-- Event listener -->
         <parameter key="ivory_google_map.geocoder.event_listener.fake_request.class">Ivory\GoogleMapBundle\EventListener\FakeRequestListener</parameter>
@@ -779,8 +781,14 @@
 
         <!-- Places service -->
         <service id="ivory_google_map.places" class="%ivory_google_map.places.class%">
+            <call method="setContainer">
+                <argument type="service" id="service_container" />
+            </call>
             <call method="setPlaceSearchService">
                 <argument type="service" id="ivory_google_map.place_search" />
+            </call>
+            <call method="setPlaceDetailsService">
+                <argument type="service" id="ivory_google_map.place_details" />
             </call>
         </service>
 
@@ -791,7 +799,6 @@
             <argument type="service" id="buzz" />
         </service>
 
-        <!-- Place search request service -->
         <service id="ivory_google_map.place_search_request" class="%ivory_google_map.place_search_request.class%" scope="prototype">
             <call method="setLanguage">
                 <argument>%ivory_google_map.place_search_request.locale%</argument>
@@ -801,6 +808,25 @@
             </call>
             <call method="setKey">
                 <argument>%ivory_google_map.place_search_request.key%</argument>
+            </call>
+        </service>
+
+        <service id="ivory_google_map.place_details" class="%ivory_google_map.place_details.class%">
+            <argument>%ivory_google_map.place_details.url%</argument>
+            <argument>%ivory_google_map.place_details.https%</argument>
+            <argument>%ivory_google_map.place_details.format%</argument>
+            <argument type="service" id="buzz" />
+        </service>
+
+        <service id="ivory_google_map.place_details_request" class="%ivory_google_map.place_details_request.class%" scope="prototype">
+            <call method="setLanguage">
+                <argument>%ivory_google_map.place_details_request.locale%</argument>
+            </call>
+            <call method="setSensor">
+                <argument>%ivory_google_map.place_details_request.sensor%</argument>
+            </call>
+            <call method="setKey">
+                <argument>%ivory_google_map.place_details_request.key%</argument>
             </call>
         </service>
 

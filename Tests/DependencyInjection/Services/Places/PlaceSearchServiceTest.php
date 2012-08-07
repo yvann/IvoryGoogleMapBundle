@@ -99,7 +99,7 @@ class PlaceSearchServiceTest extends WebTestCase
 
         foreach ($placeSearchResponse->getResults() as $result) {
             $this->assertInstanceOf(
-                'Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult',
+                'Ivory\GoogleMapBundle\Model\Services\Places\PlaceResult',
                 $result
             );
         }

@@ -44,7 +44,7 @@ abstract class AbstractService
         $this->setUrl($url);
         $this->setHttps($https);
         $this->setFormat($format);
-        is_null($browser) ? $this->browser = new Browser(new \Buzz\Client\Curl()) : $this->browser = $browser;
+        $this->browser = is_null($browser) ? new Browser(new \Buzz\Client\Curl()) : $browser;
     }
 
     /**

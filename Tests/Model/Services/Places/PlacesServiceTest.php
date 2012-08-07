@@ -4,6 +4,7 @@ namespace Ivory\GoogleMapBundle\Tests\Model\Services\Places;
 
 use Ivory\GoogleMapBundle\Model\Services\Places\PlacesService;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchService;
+use Ivory\GoogleMapBundle\Model\Services\Places\PlaceDetailsService;
 
 /**
  * PlacesService test
@@ -32,5 +33,14 @@ class PlacesServiceTest extends \PHPUnit_Framework_TestCase
     {
         self::$placesService->setPlaceSearchService(new PlaceSearchService());
         $this->assertInstanceOf('Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchService', self::$placesService->getPlaceSearchService());
+    }
+
+    /**
+     * Checks place search service getter/setter
+     */
+    public function testPlaceDetailsService()
+    {
+        self::$placesService->setPlaceDetailsService(new PlaceDetailsService());
+        $this->assertInstanceOf('Ivory\GoogleMapBundle\Model\Services\Places\PlaceDetailsService', self::$placesService->getPlaceDetailsService());
     }
 }

@@ -20,6 +20,11 @@ abstract class AbstractRequest
     protected $key = null;
 
     /**
+     * @var string The language code, indicating in which language the results should be returned.
+     */
+    protected $language = null;
+
+    /**
      * Checks if the request has a sensor
      *
      * @return boolean TRUE if the request has a sensor else FALSE
@@ -77,5 +82,31 @@ abstract class AbstractRequest
         }
 
         return $this->key;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasLanguage()
+    {
+        return !is_null($this->language);
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param $language
+     * @return PlaceSearchRequest
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+        return $this;
     }
 }

@@ -7,7 +7,7 @@ use Ivory\GoogleMapBundle\Model\Base\Coordinate;
 
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchRequest;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse;
-use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult;
+use Ivory\GoogleMapBundle\Model\Services\Places\PlaceResult;
 
 use Buzz\Browser;
 
@@ -110,14 +110,14 @@ class PlaceSearchService extends AbstractService
     {
         if (null === $placeSearchResponse) {
             $placeSearchResponse = new PlaceSearchResponse(
-                $this->generatePlaceSearchResults($placeSearchResponseProvided->results),
+                $this->generatePlaceResults($placeSearchResponseProvided->results),
                 $placeSearchResponseProvided->status,
                 $placeSearchResponseProvided->html_attributions,
                 isset($placeSearchResponseProvided->next_page_token) ? $placeSearchResponseProvided->next_page_token : null
             );
         } else {
             $placeSearchResponse
-                ->addResults($this->generatePlaceSearchResults($placeSearchResponseProvided->results))
+                ->addResults($this->generatePlaceResults($placeSearchResponseProvided->results))
                 ->setStatus($placeSearchResponseProvided->status)
                 ->setHtmlAttributions($placeSearchResponseProvided->html_attributions)
                 ->setNextPageToken(isset($placeSearchResponseProvided->next_page_token) ? $placeSearchResponseProvided->next_page_token : null);
@@ -129,61 +129,18 @@ class PlaceSearchService extends AbstractService
     /**
      * Generate place search results
      *
-     * @param stdClass $placeSearchResults
+     * @param stdClass $placeResults
      * @return array
      */
-    protected function generatePlaceSearchResults(array $placeSearchResults)
+    protected function generatePlaceResults(array $placeResults)
     {
         $results = array();
 
-        foreach ($placeSearchResults as $placeSearchResult) {
-            $results[] = $this->generatePlaceSearchResult($placeSearchResult);
+        foreach ($placeResults as $placeResult) {
+            $results[] = new PlaceResult($placeResult);
         }
 
         return $results;
-    }
-
-    /**
-     * Generate place search result
-     *
-     * @param stdClass $placeSearchResult
-     * @return array
-     */
-    protected function generatePlaceSearchResult(\stdClass $placeSearchResult)
-    {
-        $events = array();
-        if (isset($placeSearchResult->events)) {
-            foreach ($placeSearchResult->events as $event) {
-                $e = new PlaceEventResult();
-                $e
-                    ->setId($event->id)
-                    ->setDuration(isset($event->duration) ? $event->duration : null)
-                    ->setStartTime(isset($event->start_time) ? $event->start_time : null)
-                    ->setSummary(isset($event->summary) ? $event->summary : null)
-                    ->setUrl(isset($event->url) ? $event->url : null);
-
-                $events[] = $e;
-            }
-        }
-
-        $result = new PlaceSearchResult();
-        return $result
-            ->setId($placeSearchResult->id)
-            ->setReference($placeSearchResult->reference)
-            ->setEvents($events)
-            ->setLocation(
-                new Coordinate(
-                    $placeSearchResult->geometry->location->lat,
-                    $placeSearchResult->geometry->location->lng,
-                    isset ($placeSearchResult->geometry->location->noWrap) ? (bool) $placeSearchResult->geometry->location->noWrap : true
-                )
-            )
-            ->setIcon(isset($placeSearchResult->icon) ? $placeSearchResult->icon : null)
-            ->setName(isset($placeSearchResult->name) ? $placeSearchResult->name : null)
-            ->setRating(isset($placeSearchResult->rating) ? $placeSearchResult->rating : null)
-            ->setTypes(isset($placeSearchResult->types) ? $placeSearchResult->types : array())
-            ->setVicinity(isset($placeSearchResult->vicinity) ? $placeSearchResult->vicinity : null)
-        ;
     }
 
     /**

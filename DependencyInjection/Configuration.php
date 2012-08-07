@@ -72,6 +72,8 @@ class Configuration implements ConfigurationInterface
         $this->addDirectionsRequestSection($rootNode);
         $this->addPlaceSearchSection($rootNode);
         $this->addPlaceSearchRequestSection($rootNode);
+        $this->addPlaceDetailsSection($rootNode);
+        $this->addPlaceDetailsRequestSection($rootNode);
 
         return $treeBuilder;
     }
@@ -828,6 +830,44 @@ class Configuration implements ConfigurationInterface
         $node
             ->children()
                 ->arrayNode('place_search_request')->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('sensor')->defaultFalse()->end()
+                        ->scalarNode('locale')->defaultValue(null)->end()
+                        ->scalarNode('key')->defaultValue(null)->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     * Add the places section
+     *
+     * @param Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    protected function addPlaceDetailsSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('place_details')->addDefaultsIfNotSet()
+                    ->children()
+                        ->booleanNode('https')->defaultFalse()->end()
+                        ->scalarNode('format')->defaultValue('json')->end()
+                        ->scalarNode('url')->defaultValue('http://maps.googleapis.com/maps/api/place/details')->end()
+                    ->end()
+                ->end()
+            ->end();
+    }
+
+    /**
+     * Add the place details request section
+     *
+     * @param Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition $node
+     */
+    protected function addPlaceDetailsRequestSection(ArrayNodeDefinition $node)
+    {
+        $node
+            ->children()
+                ->arrayNode('place_details_request')->addDefaultsIfNotSet()
                     ->children()
                         ->booleanNode('sensor')->defaultFalse()->end()
                         ->scalarNode('locale')->defaultValue(null)->end()

@@ -4,7 +4,7 @@ namespace Ivory\GoogleMapBundle\Tests\Model\Services\Places;
 
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchStatus;
-use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult;
+use Ivory\GoogleMapBundle\Model\Services\Places\PlaceResult;
 
 /**
  * PlaceSearchResponse test
@@ -33,7 +33,7 @@ class PlaceSearchResponseTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(0, count(self::$placeSearchResponse->getResults()));
 
-        self::$placeSearchResponse->addResult(new PlaceSearchResult());
+        self::$placeSearchResponse->addResult(new PlaceResult());
         $this->assertEquals(1, count(self::$placeSearchResponse->getResults()));
     }
 

@@ -37,6 +37,20 @@ class PlaceEventResult
      */
     protected $duration = null;
 
+    public function __construct($event = null)
+    {
+        if (null !== $event) {
+            $dateTime = new \DateTime();
+            $this
+                ->setId($event->id)
+                ->setDuration(isset($event->duration) ? $event->duration : null)
+                ->setStartTime(isset($event->start_time) ? $dateTime->setTimestamp($event->start_time) : null)
+                ->setSummary(isset($event->summary) ? $event->summary : null)
+                ->setUrl(isset($event->url) ? $event->url : null)
+            ;
+        }
+    }
+
     /**
      * @return int|null
      */

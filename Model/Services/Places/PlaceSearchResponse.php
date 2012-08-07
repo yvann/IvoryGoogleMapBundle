@@ -2,7 +2,7 @@
 
 namespace Ivory\GoogleMapBundle\Model\Services\Places;
 
-use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult;
+use Ivory\GoogleMapBundle\Model\Services\Places\PlaceResult;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchStatus;
 
 /**
@@ -90,10 +90,10 @@ class PlaceSearchResponse
     /**
      * Add a place search result
      *
-     * @param Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResult $result
+     * @param Ivory\GoogleMapBundle\Model\Services\Places\PlaceResult $result
      * @return \Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchResponse
      */
-    public function addResult(PlaceSearchResult $result)
+    public function addResult(PlaceResult $result)
     {
         $this->results[] = $result;
 
