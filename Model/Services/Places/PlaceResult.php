@@ -4,6 +4,7 @@ namespace Ivory\GoogleMapBundle\Model\Services\Places;
 
 use Ivory\GoogleMapBundle\Model\Base\Coordinate;
 use Ivory\GoogleMapBundle\Model\Services\Places\PlaceEventResult;
+use Ivory\GoogleMapBundle\Model\Services\Places\PlaceReviewResult;
 
 /**
  * PlaceResult represents a google map place result
@@ -122,7 +123,10 @@ class PlaceResult
         !isset($result->international_phone_number) ?: $this->setInternationalPhoneNumber($result->international_phone_number);
         !isset($result->utc_offset) ?: $this->setUtcOffset($result->utc_offset);
         !isset($result->opening_hours) ?: $this->setOpeningHours($result->opening_hours);
-        !isset($result->reviews) ?: $this->setReviews($result->reviews);
+
+        !isset($result->reviews) ?: $this->setReviews(array_map(function($review) {
+            return new PlaceReviewResult($review);
+        }, $result->reviews));
 
         !isset($result->events) ?: $this->setEvents(array_map(function($event) {
             return new PlaceEventResult($event);
@@ -516,21 +520,15 @@ class PlaceResult
         return $this;
     }
 
-    public function addReview($review)
+    /**
+     * @param PlaceReviewResult $review
+     * @return PlaceResult
+     */
+    public function addReview(PlaceReviewResult $review)
     {
-        $dateTime = new \DateTime();
-        $this->reviews[] = array(
-            'aspects' => isset($review->aspects) ? array_map(function($aspect) {
-                return array(
-                    'type' => isset($aspect->type) ? $aspect->type : null,
-                    'rating' => isset($aspect->rating) ? $aspect->rating : null,
-                );
-            }, $review->aspects) : null,
-            'authorName' => isset($review->author_name) ? $review->author_name : null,
-            'authorUrl' => isset($review->author_url) ? $review->author_url : null,
-            'text' => isset($review->text) ? $review->text : null,
-            'createdAt' => isset($review->time) ? $dateTime->setTimestamp($review->time) : null,
-        );
+        $this->reviews[] = $review;
+
+        return $this;
     }
 
     /**

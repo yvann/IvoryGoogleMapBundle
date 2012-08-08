@@ -62,7 +62,7 @@ class PlacesServiceTest extends WebTestCase
                 foreach ($result->getReviews() as $review) {
                     $this->assertGreaterThan(
                         0,
-                        count($review['aspects'])
+                        count($review->getAspects())
                     );
                 }
             }

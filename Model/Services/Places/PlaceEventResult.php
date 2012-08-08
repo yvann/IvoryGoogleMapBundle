@@ -2,8 +2,6 @@
 
 namespace Ivory\GoogleMapBundle\Model\Services\Places;
 
-use Ivory\GoogleMapBundle\Model\Base\Coordinate;
-
 /**
  * PlaceEventResult represents a google place event result
  *
