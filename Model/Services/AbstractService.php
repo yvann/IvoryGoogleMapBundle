@@ -45,6 +45,7 @@ abstract class AbstractService
         $this->setHttps($https);
         $this->setFormat($format);
         $this->browser = is_null($browser) ? new Browser(new \Buzz\Client\Curl()) : $browser;
+        $this->browser->getClient()->setTimeout(60);
     }
 
     /**
