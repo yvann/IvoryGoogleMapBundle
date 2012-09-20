@@ -265,4 +265,21 @@ class PlaceSearchRequest extends AbstractRequest
     {
         return $this->rankBy;
     }
+
+    /**
+     * @return string The human readable request
+     */
+    public function __toString()
+    {
+        return ucfirst(sprintf(
+            '%s%s%s%s%s"%f,%f"',
+            $this->getTypes() ? sprintf('the "%s" ', implode(', ', $this->getTypes())) : '',
+            $this->getName() ? sprintf('named "%s" ', $this->getName()) : '',
+            $this->getKeyword() ? sprintf('containing the keyword "%s" ', $this->getKeyword()) : '',
+            $this->getRadius() ? sprintf('%d meters from ', $this->getRadius()) : '',
+            $this->getRankBy() ? sprintf('ranked by %s ', $this->getRankBy()) : '',
+            $this->getLocation()->getLatitude(),
+            $this->getLocation()->getLongitude()
+        ));
+    }
 }
