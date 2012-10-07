@@ -233,6 +233,14 @@ class PlaceSearchRequest extends AbstractRequest
     }
 
     /**
+     * @return boolean
+     */
+    public function hasRankBy()
+    {
+        return !is_null($this->rankBy);
+    }
+
+    /**
      * @param string $rankBy
      */
     public function setRankBy($rankBy)

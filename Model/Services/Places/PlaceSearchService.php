@@ -91,6 +91,7 @@ class PlaceSearchService extends AbstractService
         !$placeSearchRequest->hasName() ?: $httpQuery['name'] = $placeSearchRequest->getName();
         !$placeSearchRequest->hasKeyword() ?: $httpQuery['keyword'] = $placeSearchRequest->getKeyword();
         !$placeSearchRequest->hasPageToken() ?: $httpQuery['pagetoken'] = $placeSearchRequest->getPageToken();
+        !$placeSearchRequest->hasRankBy() ?: $httpQuery['rankby'] = $placeSearchRequest->getRankBy();
 
         return sprintf('%s/%s?%s',
             $this->getUrl(),
