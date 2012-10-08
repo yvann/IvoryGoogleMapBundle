@@ -62,7 +62,7 @@ class PlaceSearchServiceTest extends AbstractServiceTest
 
         $this->assertEquals(
             sprintf(
-                'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false',
+                'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false&rankby=prominence',
                 $placeSearchRequest->getKey()
             ),
             self::executeMethod('generateUrl', array($placeSearchRequest))
@@ -71,7 +71,7 @@ class PlaceSearchServiceTest extends AbstractServiceTest
         $placeSearchRequest->setLanguage('fr');
         $this->assertEquals(
             sprintf(
-                'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false&language=fr',
+                'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false&rankby=prominence&language=fr',
                 $placeSearchRequest->getKey()
             ),
             self::executeMethod('generateUrl', array($placeSearchRequest))
@@ -80,7 +80,7 @@ class PlaceSearchServiceTest extends AbstractServiceTest
         $placeSearchRequest->setKeyword(implode(',', array('vin', 'viande')));
         $this->assertEquals(
             sprintf(
-                'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false&language=fr&keyword=vin%%2Cviande',
+                'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false&rankby=prominence&language=fr&keyword=vin%%2Cviande',
                 $placeSearchRequest->getKey()
             ),
             self::executeMethod('generateUrl', array($placeSearchRequest))
@@ -89,7 +89,7 @@ class PlaceSearchServiceTest extends AbstractServiceTest
         $placeSearchRequest->setRadius(50);
         $this->assertEquals(
             sprintf(
-                'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false&radius=50&language=fr&keyword=vin%%2Cviande',
+                'https://maps.googleapis.com/maps/api/place/search/json?key=%s&sensor=false&rankby=prominence&radius=50&language=fr&keyword=vin%%2Cviande',
                 $placeSearchRequest->getKey()
             ),
             self::executeMethod('generateUrl', array($placeSearchRequest))
