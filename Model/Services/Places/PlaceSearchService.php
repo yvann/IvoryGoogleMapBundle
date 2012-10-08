@@ -85,13 +85,13 @@ class PlaceSearchService extends AbstractService
             );
         }
 
+        !$placeSearchRequest->hasRankBy() ?: $httpQuery['rankby'] = $placeSearchRequest->getRankBy();
         !$placeSearchRequest->hasTypes() ?: $httpQuery['types'] = \implode('|', $placeSearchRequest->getTypes());
         !$placeSearchRequest->hasRadius() ?: $httpQuery['radius'] = $placeSearchRequest->getRadius();
         !$placeSearchRequest->hasLanguage() ?: $httpQuery['language'] = $placeSearchRequest->getLanguage();
         !$placeSearchRequest->hasName() ?: $httpQuery['name'] = $placeSearchRequest->getName();
         !$placeSearchRequest->hasKeyword() ?: $httpQuery['keyword'] = $placeSearchRequest->getKeyword();
         !$placeSearchRequest->hasPageToken() ?: $httpQuery['pagetoken'] = $placeSearchRequest->getPageToken();
-        !$placeSearchRequest->hasRankBy() ?: $httpQuery['rankby'] = $placeSearchRequest->getRankBy();
 
         return sprintf('%s/%s?%s',
             $this->getUrl(),
