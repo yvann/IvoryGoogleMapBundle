@@ -34,12 +34,13 @@ class PlaceDetailsResponse
      * @param string $status
      * @param string $htmlAttributions
      */
-    public function __construct($result, $status, $htmlAttributions = array())
+    public function __construct($result = null, $status, $htmlAttributions = array())
     {
         $this
-            ->setResult($result)
             ->setStatus($status)
             ->setHtmlAttributions($htmlAttributions);
+
+        !$result ?: $this->setResult($result);
     }
 
     /**
