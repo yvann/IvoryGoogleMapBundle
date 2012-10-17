@@ -73,11 +73,16 @@ class PlaceDetailsService extends AbstractService
      */
     protected function generatePlaceDetailsResponse(\stdClass $placeDetailsResponseProvided, PlaceResult $result = null)
     {
-        return new PlaceDetailsResponse(
-            null === $result ? new PlaceResult($placeDetailsResponseProvided->result) : $result->update($placeDetailsResponseProvided->result),
-            $placeDetailsResponseProvided->status,
-            $placeDetailsResponseProvided->html_attributions
-        );
+        if (isset($placeDetailsResponseProvided->result)) {
+            return new PlaceDetailsResponse(
+                null === $result ? new PlaceResult($placeDetailsResponseProvided->result) : $result->update($placeDetailsResponseProvided->result),
+                isset($placeDetailsResponseProvided->status) ? $placeDetailsResponseProvided->status : '',
+                isset($placeDetailsResponseProvided->html_attributions) ? $placeDetailsResponseProvided->html_attributions : ''
+            );
+        } else {
+            throw new \UnexpectedValueException('The response does not contain result node');
+        }
+        
     }
 
     /**
