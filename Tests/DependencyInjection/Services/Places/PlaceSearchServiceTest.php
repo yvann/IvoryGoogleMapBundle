@@ -22,7 +22,7 @@ class PlaceSearchServiceTest extends WebTestCase
         $service = self::createContainer()->get('ivory_google_map.place_search');
 
         $this->assertInstanceOf('Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchService', $service);
-        $this->assertEquals('http://maps.googleapis.com/maps/api/place/search', $service->getUrl());
+        $this->assertEquals('http://maps.googleapis.com/maps/api/place/nearbysearch', $service->getUrl());
         $this->assertEquals('json', $service->getFormat());
     }
 
@@ -34,7 +34,7 @@ class PlaceSearchServiceTest extends WebTestCase
         $service = self::createContainer(array('environment' => 'test'))->get('ivory_google_map.place_search');
 
         $this->assertInstanceOf('Ivory\GoogleMapBundle\Model\Services\Places\PlaceSearchService', $service);
-        $this->assertEquals('https://maps.googleapis.com/maps/api/place/search', $service->getUrl());
+        $this->assertEquals('https://maps.googleapis.com/maps/api/place/nearbysearch', $service->getUrl());
         $this->assertEquals('json', $service->getFormat());
         $this->assertTrue($service->isHttps());
     }

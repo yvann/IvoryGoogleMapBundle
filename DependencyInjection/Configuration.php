@@ -814,7 +814,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->booleanNode('https')->defaultFalse()->end()
                         ->scalarNode('format')->defaultValue('json')->end()
-                        ->scalarNode('url')->defaultValue('http://maps.googleapis.com/maps/api/place/search')->end()
+                        ->scalarNode('url')->defaultValue('http://maps.googleapis.com/maps/api/place/nearbysearch')->end()
                     ->end()
                 ->end()
             ->end();

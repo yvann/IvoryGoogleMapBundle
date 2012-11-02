@@ -248,7 +248,7 @@ ivory_google_map:
         sensor: true
 
     place_search:
-        url: http://maps.googleapis.com/maps/api/place/search
+        url: http://maps.googleapis.com/maps/api/place/nearbysearch
         https: true
 
     place_search_request:
